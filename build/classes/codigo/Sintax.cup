@@ -1,0 +1,448 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal 
+    InicioDeTablaConAtributo,
+    AperturaMetaNameConAtributo, 
+    EspacioVacio,
+    FinEtiqueta,
+    AperturaEtiquetaAconAtributo,
+    CierreEtiquetaA,
+    Imagen,
+    AperturaLibreriaHTML,
+    InicioDocumento,
+    CierreDeDocumento,
+    AperturaHead,
+    CierreHead,
+    AperturaMetaName,
+    AperturaTitle,
+    CierreTitulo,
+    AperturaBody,
+    CierreBody,
+    UnaLineaHorizontal,
+    InicioDeParrafo,
+    FinDeParrafo,
+    SaltoDeLinea,
+    InicioMarcadoConEnfasis,
+    FinMarcadoConEnfasis,
+    InicioResaltadoEm,
+    FinResaltadoEm,
+    InicioResaltadoMark,
+    FinResaltadoMark,
+    InicioResaltadoMarkConAtributo,
+    AperturaDivision,
+    CierreDivision,
+    AperturaSeccion ,
+    CierreSeccion,
+    AperturaTitulo1,
+    CierreTitulo1,
+    AperturaTitulo2,
+    CierreTitulo2,
+    AperturaTitulo3,
+    CierreTitulo3,
+    AperturaTitulo4,
+    CierreTitulo4,
+    AperturaTitulo5,
+    CierreTitulo5,
+    AperturaTitulo6,
+    CierreTitulo6,
+    AperturaDeListaOrdenada,
+    CierreDeListaOrdenada,
+    AperturaListaDesordenada,
+    CierreListaDesordenada,
+    ItemEnLaLista,
+    CierreDeItemEnLaLista,
+    TablaConBorde,
+    InicioDeTabla,
+    CierreDeTabla,
+    InicioDeTituloDeTabla,
+    FinDeTituloDeTabla,
+    InicioDeCabezaDeTabla,
+    CierreDeCabezaDeTabla,
+    InicioDePieDeTabla,
+    FinDePieDeTabla,
+    InicioDeCuerpoDeTabla,
+    FinDeCuerpoDeTabla,
+    InicioDeCelda,
+    CierreDeCelda,
+    InicioDeColumna,
+    CierreDeColumna,
+    InicioDefila,
+    CierreDeFila,
+    Atributosrc,
+    Atributowidth,
+    Atributoheight,
+    alt,
+    Url,
+    AperturaDeIdiomaHTML,
+    AperturaTitleConAtributo,
+    AperturaBodyConAtributo,
+    InicioMarcadoConEnfasisConAtributo,
+    AperturaDivisionConAtributo,
+    InicioResaltadoEmConAtributo,
+    AperturaTitulo1ConAtributo,
+    AperturaTitulo2ConAtributo,
+    AperturaTitulo3ConAtributo,
+    AperturaTitulo4ConAtributo,
+    AperturaTitulo5ConAtributo,
+    AperturaTitulo6ConAtributo,
+    AperturaDeListaOrdenadaConAtributo,
+    AperturaListaDesordenadaConAtributo,
+    ItemEnLaListaConAtributo,
+    TablaConBordeConAtributo,
+    InicioDeTituloDeTablaConAtributo,
+    InicioDeCabezaDeTablaConAtributo,
+    InicioDePieDeTablaConAtributo,
+    InicioDeCuerpoDeTablaConAtributo,
+    InicioDeCeldaConAtributo,
+    InicioDeColumnaConAtributo,
+    InicioDefilaConAtributo,
+    AperturaSeccionConAtributo,
+    texto,
+    InicioDeParrafoConAtributo,
+    LATE,
+    VALUE,
+    AtributoHREF,
+    AtributoTARGET,
+    AtributogeneralCLASS,
+    AtributogeneralID,
+    ERROR
+   
+    
+;
+
+non terminal 
+    LENG, 
+    INICIO,
+    CAB, 
+    F, 
+    J, 
+    TIT, 
+    CUER, 
+    SENTENCIA, 
+    PARR,
+    Q,
+    TITU, 
+    SECCION, 
+    ENLA, 
+    LIST, 
+    IMGG, 
+    DIVV, 
+    TAB,
+    ATIMG,
+    U,
+    CABEZA,
+    PIE,
+    CUERPO,
+    PROD,
+    ATIMG2,
+    QUE,
+    ATIMG3,
+    ATIMG4,
+    Lambda,
+    ATG,
+    GLO
+;
+
+start with INICIO;
+
+INICIO ::= 
+    InicioDocumento LENG CierreDeDocumento
+;
+
+LENG ::= 
+    AperturaDeIdiomaHTML CAB CUER | Lambda
+;
+
+CAB ::=
+    AperturaHead F TIT CierreHead | AperturaHead TIT F CierreHead
+;
+
+F ::=
+    AperturaLibreriaHTML J | AperturaLibreriaHTML
+;
+
+J ::= 
+    AperturaMetaName J | AperturaMetaNameConAtributo J | AperturaMetaName | AperturaMetaNameConAtributo
+;
+
+TIT ::= 
+    AperturaTitle texto CierreTitulo | AperturaTitleConAtributo ATG FinEtiqueta texto CierreTitulo 
+;
+
+CUER ::= 
+   AperturaBody SENTENCIA CierreBody  | AperturaBodyConAtributo ATG FinEtiqueta SENTENCIA CierreBody
+;
+
+SENTENCIA ::=
+    PARR | TITU | SECCION | ENLA | LIST | IMGG | DIVV | TAB |
+    UnaLineaHorizontal SENTENCIA | SaltoDeLinea SENTENCIA | 
+    UnaLineaHorizontal | SaltoDeLinea |
+    InicioMarcadoConEnfasis texto FinMarcadoConEnfasis SENTENCIA | 
+    InicioMarcadoConEnfasisConAtributo ATG FinEtiqueta texto FinMarcadoConEnfasis SENTENCIA |
+    InicioMarcadoConEnfasis texto FinMarcadoConEnfasis | 
+    InicioMarcadoConEnfasisConAtributo ATG FinEtiqueta texto FinMarcadoConEnfasis |
+    InicioResaltadoEm texto FinResaltadoEm SENTENCIA | InicioResaltadoEmConAtributo ATG FinEtiqueta texto FinResaltadoEm SENTENCIA |
+    InicioResaltadoEm texto FinResaltadoEm | InicioResaltadoEmConAtributo ATG FinEtiqueta texto FinResaltadoEm |
+    InicioResaltadoMark texto FinResaltadoMark SENTENCIA | InicioResaltadoMarkConAtributo ATG FinEtiqueta texto FinResaltadoMark SENTENCIA | 
+    InicioResaltadoMark texto FinResaltadoMark | InicioResaltadoMarkConAtributo ATG FinEtiqueta texto FinResaltadoMark |                                                                
+    EspacioVacio SENTENCIA | texto SENTENCIA| EspacioVacio | texto |InicioResaltadoMark  QUE  FinResaltadoMark |
+    InicioResaltadoMark  QUE FinResaltadoMark  SENTENCIA  
+;
+Lambda ::=
+;
+
+QUE::= 
+         InicioMarcadoConEnfasis texto FinMarcadoConEnfasis | InicioMarcadoConEnfasis texto FinMarcadoConEnfasis QUE
+;
+Q::= 
+    InicioMarcadoConEnfasis texto FinMarcadoConEnfasis Q | 
+    InicioMarcadoConEnfasisConAtributo ATG FinEtiqueta texto FinMarcadoConEnfasis Q |
+    InicioMarcadoConEnfasis texto FinMarcadoConEnfasis | 
+    InicioMarcadoConEnfasisConAtributo ATG FinEtiqueta texto FinMarcadoConEnfasis |
+    InicioResaltadoEm texto FinResaltadoEm Q | InicioResaltadoEmConAtributo ATG FinEtiqueta texto FinResaltadoEm Q |
+    InicioResaltadoEm texto FinResaltadoEm | InicioResaltadoEmConAtributo ATG FinEtiqueta texto FinResaltadoEm |
+    InicioResaltadoMark texto FinResaltadoMark Q | InicioResaltadoMarkConAtributo ATG FinEtiqueta texto FinResaltadoMark Q | 
+    InicioResaltadoMark texto FinResaltadoMark | InicioResaltadoMarkConAtributo ATG FinEtiqueta texto FinResaltadoMark |                                                                
+    EspacioVacio Q | texto Q| EspacioVacio | texto |InicioResaltadoMark  QUE  FinResaltadoMark |
+    InicioResaltadoMark  QUE FinResaltadoMark  Q  
+;
+ATIMG ::=  
+    Atributosrc | Atributosrc alt | Atributosrc ATIMG3 | Atributosrc ATIMG4 | Atributosrc ATIMG2 | Atributosrc ATIMG2 alt | Atributosrc ATIMG3 alt | Atributosrc ATIMG4 alt |
+    Atributosrc alt ATIMG2 | Atributosrc alt ATIMG4 | Atributosrc alt ATIMG3  | 
+    alt Atributosrc | alt Atributosrc ATIMG2 | alt Atributosrc ATIMG3 | alt Atributosrc ATIMG4 | alt ATIMG2 Atributosrc | alt ATIMG3 Atributosrc | alt ATIMG4 Atributosrc | alt ATIMG3 Atributosrc ATIMG4 |
+    ATIMG2 Atributosrc | ATIMG2 Atributosrc alt | ATIMG2 alt Atributosrc |
+    ATIMG3 Atributosrc |ATIMG3 Atributosrc alt | ATIMG3 Atributosrc ATIMG4 | ATIMG3 alt Atributosrc | ATIMG3 alt ATIMG4 Atributosrc | ATIMG3 alt Atributosrc ATIMG4 | ATIMG3 Atributosrc alt ATIMG4 |
+    ATIMG3 Atributosrc ATIMG4 alt |
+    ATIMG4 Atributosrc |ATIMG4 Atributosrc alt | ATIMG4 Atributosrc ATIMG3 | ATIMG4 alt Atributosrc | ATIMG4 alt ATIMG3 Atributosrc | ATIMG4 alt Atributosrc ATIMG3 | ATIMG4 Atributosrc alt ATIMG3 | 
+    ATIMG4 Atributosrc ATIMG3 alt 
+;
+
+ATIMG2 ::=
+   Atributowidth Atributoheight | Atributoheight Atributowidth 
+;
+ATIMG3 ::=
+    Atributoheight
+;
+ATIMG4 ::=
+    Atributowidth
+;
+
+DIVV ::= 
+    AperturaDivision SENTENCIA CierreDivision SENTENCIA | 
+    AperturaDivisionConAtributo ATG FinEtiqueta SENTENCIA CierreDivision SENTENCIA |                                                                                                                    
+    AperturaDivision SENTENCIA CierreDivision | 
+    AperturaDivisionConAtributo ATG FinEtiqueta SENTENCIA CierreDivision
+;
+
+IMGG ::= 
+    Imagen ATG ATIMG FinEtiqueta SENTENCIA| Imagen ATIMG FinEtiqueta SENTENCIA | Imagen ATG ATIMG FinEtiqueta |
+    Imagen ATIMG FinEtiqueta
+;
+
+SECCION ::=
+    AperturaSeccion SENTENCIA CierreSeccion |AperturaSeccion SENTENCIA CierreSeccion SENTENCIA |AperturaSeccionConAtributo ATG FinEtiqueta SENTENCIA CierreSeccion | AperturaSeccionConAtributo ATG FinEtiqueta SENTENCIA CierreSeccion SENTENCIA
+;
+
+PARR ::=    
+    InicioDeParrafoConAtributo ATG FinEtiqueta SENTENCIA FinDeParrafo SENTENCIA |
+    InicioDeParrafoConAtributo ATG FinEtiqueta SENTENCIA FinDeParrafo |
+    InicioDeParrafo SENTENCIA FinDeParrafo SENTENCIA |
+    InicioDeParrafo SENTENCIA FinDeParrafo 
+; 
+                                                                  
+TITU ::= 
+    AperturaTitulo1ConAtributo ATG FinEtiqueta texto CierreTitulo1 SENTENCIA |
+    AperturaTitulo1ConAtributo ATG FinEtiqueta texto CierreTitulo1 |
+    AperturaTitulo2ConAtributo ATG FinEtiqueta texto CierreTitulo2 SENTENCIA |
+    AperturaTitulo2ConAtributo ATG FinEtiqueta texto CierreTitulo2 |
+    AperturaTitulo3ConAtributo ATG FinEtiqueta texto CierreTitulo3 SENTENCIA | 
+    AperturaTitulo3ConAtributo ATG FinEtiqueta texto CierreTitulo3 |
+    AperturaTitulo4ConAtributo ATG FinEtiqueta texto CierreTitulo4 SENTENCIA | 
+    AperturaTitulo4ConAtributo ATG FinEtiqueta texto CierreTitulo4 |
+    AperturaTitulo5ConAtributo ATG FinEtiqueta texto CierreTitulo5 SENTENCIA |
+    AperturaTitulo5ConAtributo ATG FinEtiqueta texto CierreTitulo5 |
+    AperturaTitulo6ConAtributo ATG FinEtiqueta texto CierreTitulo6 SENTENCIA | 
+    AperturaTitulo6ConAtributo ATG FinEtiqueta texto CierreTitulo6 |
+    AperturaTitulo1 texto CierreTitulo1 SENTENCIA | AperturaTitulo1 texto CierreTitulo1 |
+    AperturaTitulo2 texto CierreTitulo2 SENTENCIA | AperturaTitulo2 texto CierreTitulo2 |
+    AperturaTitulo3 texto CierreTitulo3 SENTENCIA | AperturaTitulo3 texto CierreTitulo3 |
+    AperturaTitulo4 texto CierreTitulo4 SENTENCIA | AperturaTitulo4 texto CierreTitulo4 |
+    AperturaTitulo5 texto CierreTitulo5 SENTENCIA | AperturaTitulo5 texto CierreTitulo5 |
+    AperturaTitulo6 texto CierreTitulo6 SENTENCIA | AperturaTitulo6 texto CierreTitulo6 
+;
+
+LIST ::=
+    AperturaDeListaOrdenadaConAtributo ATG LATE FinEtiqueta U CierreDeListaOrdenada SENTENCIA | 
+    AperturaDeListaOrdenadaConAtributo ATG LATE FinEtiqueta U CierreDeListaOrdenada |
+    AperturaDeListaOrdenadaConAtributo ATG FinEtiqueta U CierreDeListaOrdenada SENTENCIA | 
+    AperturaDeListaOrdenadaConAtributo ATG FinEtiqueta U CierreDeListaOrdenada | 
+    AperturaDeListaOrdenada U CierreDeListaOrdenada | AperturaDeListaOrdenada U CierreDeListaOrdenada SENTENCIA | 
+    AperturaDeListaOrdenadaConAtributo LATE FinEtiqueta U CierreDeListaOrdenada SENTENCIA | 
+    AperturaDeListaOrdenadaConAtributo LATE FinEtiqueta U CierreDeListaOrdenada |
+    AperturaListaDesordenadaConAtributo ATG FinEtiqueta U CierreListaDesordenada SENTENCIA | 
+    AperturaListaDesordenadaConAtributo ATG FinEtiqueta U CierreListaDesordenada |
+    AperturaListaDesordenada U CierreListaDesordenada SENTENCIA | AperturaListaDesordenada U CierreListaDesordenada
+;
+
+U ::= 
+    ItemEnLaLista SENTENCIA CierreDeItemEnLaLista | ItemEnLaLista SENTENCIA CierreDeItemEnLaLista U |
+    ItemEnLaListaConAtributo VALUE FinEtiqueta SENTENCIA CierreDeItemEnLaLista | 
+    ItemEnLaListaConAtributo VALUE FinEtiqueta SENTENCIA CierreDeItemEnLaLista U  
+;
+
+ENLA ::=  
+    AperturaEtiquetaAconAtributo AtributoHREF Url FinEtiqueta SENTENCIA CierreEtiquetaA  | 
+    AperturaEtiquetaAconAtributo ATG AtributoHREF Url FinEtiqueta SENTENCIA CierreEtiquetaA  |
+    AperturaEtiquetaAconAtributo AtributoHREF Url FinEtiqueta SENTENCIA CierreEtiquetaA SENTENCIA |
+    AperturaEtiquetaAconAtributo ATG AtributoHREF Url FinEtiqueta SENTENCIA CierreEtiquetaA SENTENCIA |
+    AperturaEtiquetaAconAtributo AtributoHREF Url AtributoTARGET FinEtiqueta SENTENCIA CierreEtiquetaA  | 
+    AperturaEtiquetaAconAtributo ATG AtributoHREF Url AtributoTARGET FinEtiqueta SENTENCIA CierreEtiquetaA  | 
+    AperturaEtiquetaAconAtributo AtributoHREF Url AtributoTARGET FinEtiqueta SENTENCIA CierreEtiquetaA SENTENCIA |
+    AperturaEtiquetaAconAtributo ATG AtributoHREF Url AtributoTARGET FinEtiqueta SENTENCIA CierreEtiquetaA SENTENCIA 
+;
+
+TAB ::=
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla | TablaConBorde CABEZA PIE CUERPO CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA | TablaConBorde CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla | TablaConBorde CABEZA CUERPO PIE CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA | TablaConBorde CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla | TablaConBorde CABEZA  CUERPO CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA | TablaConBorde CABEZA  CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla | TablaConBorde CABEZA PIE  CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA | TablaConBorde CABEZA PIE  CierreDeTabla SENTENCIA |
+
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA PIE CUERPO CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA CUERPO PIE CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA  CUERPO CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA  CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA PIE  CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta CABEZA PIE  CierreDeTabla SENTENCIA |
+
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla |
+     TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+
+    
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla | 
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla 
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla | 
+    TablaConBorde InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+
+    TablaConBorde PROD CierreDeTabla |
+    TablaConBorde PROD CierreDeTabla SENTENCIA | 
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla |
+    TablaConBorde InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA |
+    TablaConBordeConAtributo ATG FinEtiqueta PROD CierreDeTabla |
+    TablaConBordeConAtributo ATG FinEtiqueta PROD CierreDeTabla SENTENCIA | 
+    TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla |
+    TablaConBordeConAtributo ATG FinEtiqueta InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA |
+ 
+    InicioDeTabla CABEZA PIE CUERPO CierreDeTabla | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+    InicioDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    InicioDeTabla CABEZA CUERPO PIE CierreDeTabla | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla |
+    InicioDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    InicioDeTabla CABEZA PIE  CierreDeTabla | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla |
+    InicioDeTabla CABEZA PIE  CierreDeTabla SENTENCIA | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+    InicioDeTabla CABEZA  CUERPO CierreDeTabla | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla |
+    InicioDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA | InicioDeTabla InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+
+    InicioDeTabla InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla | InicioDeTabla PROD CierreDeTabla |
+    InicioDeTabla InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA | InicioDeTabla PROD CierreDeTabla SENTENCIA|
+
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA PIE CUERPO CierreDeTabla | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA PIE CUERPO CierreDeTabla SENTENCIA | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA CUERPO PIE CierreDeTabla | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA CUERPO PIE CierreDeTabla SENTENCIA | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA PIE  CierreDeTabla | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA PIE  CierreDeTabla SENTENCIA | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA  CUERPO CierreDeTabla | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta CABEZA  CUERPO CierreDeTabla SENTENCIA | InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla  Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla | InicioDeTablaConAtributo ATG FinEtiqueta PROD CierreDeTabla |
+    InicioDeTablaConAtributo ATG FinEtiqueta InicioDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA | InicioDeTablaConAtributo ATG FinEtiqueta PROD CierreDeTabla SENTENCIA |
+
+    InicioDeTabla InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE CUERPO CierreDeTabla SENTENCIA |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA CUERPO PIE CierreDeTabla SENTENCIA |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA PIE  CierreDeTabla SENTENCIA |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla |
+    InicioDeTabla  InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla CABEZA  CUERPO CierreDeTabla SENTENCIA |
+
+    InicioDeTabla InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla | InicioDeTabla InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla PROD CierreDeTabla |
+    InicioDeTabla InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA | InicioDeTabla InicioDeTituloDeTablaConAtributo ATG FinEtiqueta Q FinDeTituloDeTabla PROD CierreDeTabla SENTENCIA
+;                 
+
+CABEZA ::=
+    InicioDeCabezaDeTabla PROD CierreDeCabezaDeTabla |
+    InicioDeCabezaDeTablaConAtributo ATG FinEtiqueta PROD CierreDeCabezaDeTabla                                                           
+;
+             
+PIE ::=
+    InicioDePieDeTabla PROD FinDePieDeTabla | 
+    InicioDePieDeTablaConAtributo ATG FinEtiqueta PROD FinDePieDeTabla
+;
+                                           
+CUERPO ::=
+    InicioDeCuerpoDeTabla PROD FinDeCuerpoDeTabla | 
+    InicioDeCuerpoDeTablaConAtributo ATG FinEtiqueta PROD FinDeCuerpoDeTabla
+;
+
+GLO ::=
+    InicioDeCelda SENTENCIA CierreDeCelda GLO | InicioDeCelda SENTENCIA CierreDeCelda |
+    InicioDeCeldaConAtributo ATG FinEtiqueta SENTENCIA CierreDeCelda GLO | 
+    InicioDeCeldaConAtributo ATG FinEtiqueta SENTENCIA CierreDeCelda |
+    InicioDeColumna SENTENCIA CierreDeColumna GLO | InicioDeColumna SENTENCIA CierreDeColumna |
+    InicioDeColumnaConAtributo ATG FinEtiqueta SENTENCIA CierreDeColumna GLO |
+    InicioDeColumnaConAtributo ATG FinEtiqueta SENTENCIA CierreDeColumna  
+;
+
+
+PROD::=
+    InicioDefila GLO CierreDeFila PROD | InicioDefila GLO CierreDeFila |
+    InicioDefilaConAtributo ATG FinEtiqueta GLO CierreDeFila PROD |
+    InicioDefilaConAtributo ATG FinEtiqueta GLO CierreDeFila
+;
+ 
+ATG ::= 
+        AtributogeneralCLASS | AtributogeneralID |  AtributogeneralCLASS AtributogeneralID  | AtributogeneralID AtributogeneralCLASS
+;
+                             
+
+ 
