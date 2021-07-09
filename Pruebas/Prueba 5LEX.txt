@@ -1,0 +1,29 @@
+<table border="1">
+<caption> Ventas por secciones </caption>
+<thead>
+<tr>
+<td> &nbsp;</td>
+<td> Hardware </td>
+<td> Software </td>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th> Total </th>
+<th> 25000 </th>
+<th> 22000 </th>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<th> Enero </th>
+<td> 12000 </td>
+<td> 15000 </td>
+</tr>
+<tr>
+<th> Febrero </th>
+<td> 13000 </td>
+<td> 9000 </td>
+</tr>
+</tbody>
+</table>
